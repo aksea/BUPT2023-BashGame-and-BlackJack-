@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <Windows.h>
-#define ARRAY_SIZE 6000
+#define ARRAY_SIZE 30000
 // 玩家和庄家点数
 int playerPoints, dealerPoints;
 // 玩家和庄家A数
@@ -14,6 +14,7 @@ int cardLibrary[10] = { 4, 4, 4, 4, 4, 4, 4, 4, 4, 16 };
 // 计数
 int win;  // 胜利次数
 int lose; // 失败次数
+int push; // 平局次数
 // 随机数表
 int RandNum[ARRAY_SIZE];
 int RandNumPoint;
@@ -49,7 +50,7 @@ int main()
 	{
 		RandNum[i] = rand() % 13; // 生成 0 到 12 之间的随机数
 	}
-	int testNum = 1000;
+	int testNum = 4000;
 	while (testNum--)
 	{
 		for (int i = 0; i < 10; i++)
@@ -138,8 +139,7 @@ int main()
 			else if (playerPoints == dealerPoints)
 			{
 				printf("Push\n");
-				win++;
-				lose++;
+				push++;
 			}
 			else if (playerPoints < dealerPoints)
 			{
@@ -163,11 +163,11 @@ int main()
 		printf("%d %d\n\n", playerPoints, dealerPoints);
 		printf("\n");
 		fflush(stdout);
-		Sleep(2);
+		//Sleep(1);
 	}
-	float rate = 100 * (float)win / (win + lose);
-	printf("胜场：%d 负场：%d 胜率：%.2f%%\n", win, lose, rate);
-	printf("RandNumPoint:%d", RandNumPoint);
+	float rate = 100 * (float)win / (win + lose + push);
+	printf("胜场：%d\t负场：%d\t平局：%d\t胜率：%.2f%%\n", win, lose, push, rate);
+	printf("\n\nRandNumPoint:%d", RandNumPoint);
 	return 0;
 }
 
